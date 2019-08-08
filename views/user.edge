@@ -1,0 +1,59 @@
+@layout('layouts.app')
+ 
+@section('content')
+<!-- Page Header -->
+<header class="masthead" style="background-image: url('img/home-bg.jpg')">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="site-heading">
+          <h1>Поиск</h1>
+          <span class="subheading">Все посты за авторством {{ username }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+ 
+<!-- Main Content -->
+<div class="container">
+  <div class="row">
+    <div class="col-lg-8 col-md-10 mx-auto">
+      @each(post in posts)
+        <div class="post-preview">
+        <figure ><img src="{{ post.image }}" alt="Без картинки" width="160" height="90" class="float-right" padding="10px"/></figure>
+        <div class="post-preview">
+          <a href="/post/{{ post._id }}">
+            <h2 class="post-title">
+              {{ post.title }}
+            </h2>
+            <h3 class="post-subtitle">
+              {{ post.description }}
+            </h2>
+          </a>
+          <p class="post-meta">Опубликовано {{ post.createdAt.toLocaleDateString('ru-RU', {year: "numeric", month: "long", day: "numeric"}) }}
+            в {{ post.createdAt.toLocaleTimeString('ru-RU') }}
+          </p>
+        </div>
+        </div>
+        <hr>
+      @endeach
+      <!-- Pager -->
+      <div class="clearfix" style="text-align:center">
+        @if(current > 2)
+          <a class="btn btn-primary float-left" href="/{{ current - 1 }}">&larr; Newer Posts</a>
+        @endif
+        @if(current == 2)
+          <a class="btn btn-primary float-left" href="/">&larr; Main Page</a>
+        @endif
+        @if(pages > 0 && current < pages)
+          <a class="btn btn-primary float-right" href="/{{ current + 1 }}">Older Posts &rarr;</a>
+        @endif
+      </div>
+    </div>
+  </div>
+</div>
+ 
+<hr>
+@endsection

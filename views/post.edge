@@ -1,0 +1,65 @@
+@layout('layouts.app')
+ 
+@section('content')
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+    <!-- Page Header -->
+    <header class="masthead" style="background-image: url('{{ post.image }}')">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="post-heading">
+              <h1>{{ post.title }}</h1>
+              <span class="meta">Posted by
+                <u><i>{{ post.username }}</i></u>
+                on {{ post.createdAt.toDateString() }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+ 
+    <!-- Post Content -->
+    <article>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            {{{ post.content }}}
+          </div>
+        </div>
+      </div>
+    </article>
+ 
+    <!-- Editor -->
+    @if(isAuthor || isAdmin)
+      <div class="clearfix" style="text-align:center">
+        <a class="btn btn-primary" href="/edit/{{ post._id }}">Edit Post</a>
+        <a class="btn btn-primary" href="/delete/{{ post._id }}" onclick="return confirm('Are you sure?')">Delete Post</a>
+      </div>
+    @endif
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div id="disqus_thread"></div>
+          </div>
+        </div>
+      </div>
+
+
+<script>
+/*
+var disqus_config = function () {
+this.page.url = window.location.pathname;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = window.location.pathname; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://thedimasblog.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+@endsection

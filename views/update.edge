@@ -1,0 +1,66 @@
+@layout('layouts.app')
+ 
+@section('content')
+
+<script src="https://cdn.ckeditor.com/ckeditor5/12.2.0/classic/ckeditor.js"></script>
+
+<!-- Page Header -->
+<header class="masthead">
+  <div class="overlay"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8 col-md-10 mx-auto">
+        <div class="page-heading">
+          <h1>Изменить пост</h1>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+ 
+<div class="container">
+  <div align="center">
+    <img src='../banner.png'>
+  </div>
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <form action="/posts/update" method="POST" encType="multipart/form-data">
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <input type="text" name="_id" class="form-control" value="{{ post._id }}" readonly hidden>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <input type="text" name="title" class="form-control" value="{{ post.title }}">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <input type="text" name="description" class="form-control" value="{{ post.description }}">
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="form-group floating-label-form-group controls">
+            <textarea id="editor" name="content" cols="30" rows="10" class="form-control" value="{{ post.content }}"></textarea>
+          </div>
+        </div>
+        <div class="form-group my-4 text-center">
+          <button class="btn btn-primary">Изменить!</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  ClassicEditor
+    .create( document.querySelector( '#editor' ), {
+      initialData: '{{{ post.content }}}'
+    } )
+    .catch( error => {
+      console.error( error );
+    } );
+</script>
+
+@endsection
